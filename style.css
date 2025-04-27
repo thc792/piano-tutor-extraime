@@ -1,4 +1,21 @@
 /**
+ * style.css - Stili principali per Piano Future.
+ *
+ * Piano Future
+ * Copyright (c) 2025 Lorenzetti Giuseppe
+ *
+ * Questo codice sorgente è rilasciato sotto la licenza MIT.
+ * Vedi il file LICENSE nel repository GitHub per i dettagli completi.
+ * https://github.com/thc792/piano-tutor-extraime/blob/main/LICENSE
+ */
+
+/* Reset base e font globale */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+/**
  * style.css
  * Palette Beige/Marrone Chiaro - Overflow attivo - VERSIONE COMPLETA
  */

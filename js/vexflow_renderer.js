@@ -1,4 +1,14 @@
 /**
+ * NomeFile.js/style.css - Breve descrizione (da personalizzare per ogni file)
+ *
+ * Piano Future
+ * Copyright (c) 2025 Lorenzetti Giuseppe
+ *
+ * Questo codice sorgente è rilasciato sotto la licenza MIT.
+ * Vedi il file LICENSE nel repository GitHub per i dettagli completi.
+ * https://github.com/thc792/piano-tutor-extraime/blob/main/LICENSE
+ */
+/**
  * js/vexflow_renderer.js
  * Renderer per esercizi musicali usando VexFlow.
  * **VERSIONE CON SISTEMI MULTIPLI (MULTI-LINE STAVES)**

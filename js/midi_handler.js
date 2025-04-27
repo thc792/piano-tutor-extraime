@@ -1,4 +1,14 @@
 /**
+ * NomeFile.js/style.css - Breve descrizione (da personalizzare per ogni file)
+ *
+ * Piano Future
+ * Copyright (c) 2025 Lorenzetti Giuseppe
+ *
+ * Questo codice sorgente è rilasciato sotto la licenza MIT.
+ * Vedi il file LICENSE nel repository GitHub per i dettagli completi.
+ * https://github.com/thc792/piano-tutor-extraime/blob/main/LICENSE
+ */
+/**
  * js/midi_handler.js
  * Gestore per l'input MIDI Web API
  * **VERSIONE CON AGGIUNTA FORZATA DEL LISTENER in updateDevices**

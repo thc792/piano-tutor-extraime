@@ -1,4 +1,15 @@
 /**
+ * main.js - Logica principale e gestione eventi Piano Future.
+ *
+ * Piano Future
+ * Copyright (c) 2025 Lorenzetti Giuseppe
+ *
+ * Questo codice sorgente è rilasciato sotto la licenza MIT.
+ * Vedi il file LICENSE nel repository GitHub per i dettagli completi.
+ * https://github.com/thc792/piano-tutor-extraime/blob/main/LICENSE
+ */
+
+/**
  * js/main.js
  * **VERSIONE FINALE + AVANZAMENTO ORDINATO PER CATEGORIE SPECIFICHE**
  */
