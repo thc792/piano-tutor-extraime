@@ -1,0 +1,38 @@
+# File specifici di VS Code
+.vscode/
+
+# Dipendenze Node.js (buona norma includerlo)
+node_modules/
+
+# File di log comuni
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# File temporanei e di backup comuni degli editor
+*.tmp
+*.swp
+*~
+*.bak
+*.orig
+
+# File di cache del sistema operativo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Cartelle di build comuni (commentate - decommenta se le usi)
+# dist/
+# build/
+# out/
+# public/build/
+
+# File di variabili d'ambiente (IMPORTANTE se le userai)
+# .env
+# .env.*
+# !.env.example
+
+# Eventuali altri file/cartelle specifiche del tuo sistema che non vuoi versionare
