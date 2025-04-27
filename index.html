@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Trainer Interattivo</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Importante: Carica VexFlow -->
+    <script src="https://unpkg.com/vexflow@4.2.3/build/cjs/vexflow.js"></script>
+</head>
+<body>
+    <h1>Piano Trainer Interattivo</h1>
+
+    <div class="controls">
+        <!-- Selettore Categoria Esercizi -->
+        <label for="category-select">Categoria:</label>
+        <select id="category-select">
+            <option value="">-- Seleziona Categoria --</option>
+            <!-- Popolato da JS -->
+        </select>
+
+        <!-- Selettore Esercizio Specifico -->
+        <label for="exercise-select">Esercizio:</label>
+        <select id="exercise-select" disabled>
+            <option value="">-- Prima seleziona una categoria --</option>
+        </select>
+
+        <!-- Pulsanti Start/Stop -->
+        <button id="start-button" disabled>Start</button>
+        <button id="stop-button" disabled>Stop</button>
+    </div>
+
+    <div class="status-area">
+        <p>Stato MIDI: <span id="midi-status">Inizializzazione...</span></p>
+        <p>Successo: <span id="success-rate">-- %</span></p>
+        <!-- Info sull'esercizio o ripetizioni -->
+        <p>Info: <span id="expected-note">--</span></p>
+        <p>Nota Suonata: <span id="played-note">--</span></p>
+    </div>
+
+    <!-- Area VexFlow -->
+    <div id="score">
+        <p>Seleziona una categoria e un esercizio per iniziare.</p>
+    </div>
+
+    <!-- =============================================== -->
+    <!-- CARICA I FILE DEGLI ESERCIZI QUI               -->
+    <!-- Devono essere caricati PRIMA di main.js       -->
+    <!-- Ogni file deve definire window.exerciseData[nomeCategoria] -->
+    <!-- =============================================== -->
+    <script src="js/exercises/scale.js"></script>
+    <script src="js/exercises/giri_armonici.js"></script>
+    <script src="js/exercises/indipendenza_mani.js"></script>
+    <script src="js/exercises/accordi_complessi.js"></script>
+    <script src="js/exercises/arpeggi.js"></script>
+    <script src="js/exercises/tecnica_coordinazione.js"></script> <!-- NUOVO -->
+    <script src="js/exercises/teoria_riconoscimento.js"></script> <!-- NUOVO -->
+    <script src="js/exercises/voicing_jazz_blues.js"></script>   <!-- NUOVO -->
+    <script src="js/exercises/licks_jazz.js"></script>           <!-- NUOVO -->
+    <script src="js/exercises/licks_blues_ragtime.js"></script>  <!-- NUOVO -->
+    <!-- Aggiungi qui altri eventuali file di esercizi -->
+
+
+    <!-- =============================================== -->
+    <!-- CARICA IL MODULO PRINCIPALE                   -->
+    <!-- Usa type="module" per abilitare import/export   -->
+    <!-- main.js deve essere caricato PER ULTIMO         -->
+    <!-- =============================================== -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

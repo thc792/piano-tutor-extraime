@@ -1,0 +1,178 @@
+/**
+ * style.css
+ * Palette Beige/Marrone Chiaro
+ */
+
+ body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    /* Sfondo principale - un beige molto chiaro */
+    background-color: #F5F5DC; /* Beige */
+    color: #4b3832; /* Marrone scuro per testo principale */
+}
+
+h1 {
+    text-align: center;
+    /* Marrone leggermente più scuro per il titolo */
+    color: #6f4e37; /* Coffee Brown */
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* Contenitori per controlli e stato */
+.controls, .status-area {
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    /* Sfondo leggermente più scuro, un crema/avorio */
+    background-color: #FFF8DC; /* Cornsilk */
+    border: 1px solid #D2B48C; /* Tan - bordo marroncino chiaro */
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(75, 56, 50, 0.1); /* Ombra marrone leggero */
+}
+
+/* Elementi dentro i controlli */
+.controls label,
+.controls select,
+.controls button {
+    margin: 5px 10px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    vertical-align: middle;
+    font-size: 0.95em; /* Leggermente più piccolo per allineamento */
+}
+
+.controls label {
+    font-weight: bold;
+    color: #8B7355; /* Marrone medio/chiaro (per etichette) */
+}
+
+.controls select {
+    border: 1px solid #C19A6B; /* Camel brown */
+    min-width: 180px;
+    background-color: #FFFAF0; /* Floral White - sfondo select */
+    color: #4b3832; /* Testo marrone scuro */
+    cursor: pointer;
+}
+.controls select:disabled {
+    background-color: #EFEBE9; /* Sfondo più grigio/beige se disabilitato */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+
+/* Pulsanti Start/Stop */
+.controls button {
+    cursor: pointer;
+    /* Un marrone più deciso per i pulsanti */
+    background-color: #A0522D; /* Sienna */
+    color: #FFFAF0; /* Testo molto chiaro (Floral White) */
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    min-width: 80px;
+}
+
+.controls button#start-button {
+     background-color: #8FBC8F; /* Verde salvia scuro per Start */
+     color: white;
+}
+.controls button#start-button:hover:not(:disabled) {
+     background-color: #709670;
+     transform: translateY(-1px);
+}
+
+.controls button#stop-button {
+     background-color: #CD5C5C; /* Indian Red per Stop */
+      color: white;
+}
+.controls button#stop-button:hover:not(:disabled) {
+     background-color: #b04c4c;
+     transform: translateY(-1px);
+}
+
+
+.controls button:active:not(:disabled) {
+    transform: translateY(0px); /* Effetto pressione */
+}
+
+.controls button:disabled {
+    cursor: not-allowed;
+    background-color: #D3D3D3; /* Grigio chiaro per disabilitato */
+    color: #888888;
+    opacity: 0.6;
+}
+
+/* Area di stato */
+.status-area {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 10px 20px;
+    background-color: #FAF0E6; /* Linen - colore di sfondo leggermente diverso */
+    border-color: #E0D6C4; /* Bordo ancora più chiaro */
+}
+
+.status-area p {
+    margin: 8px 15px;
+    font-size: 0.95em;
+    color: #6f4e37; /* Coffee brown per testo */
+    white-space: nowrap;
+}
+
+/* Span dentro l'area di stato (valori) */
+.status-area span {
+    font-weight: bold;
+    min-width: 80px;
+    display: inline-block;
+    color: #4b3832; /* Marrone scuro */
+    /* Sfondo per evidenziare i valori */
+    background-color: #EADDCA; /* Un beige leggermente più grigio/freddo */
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-left: 5px;
+    text-align: right;
+    font-family: monospace; /* Font mono per numeri e note */
+    font-size: 1.05em;
+}
+
+/* Area dello spartito VexFlow */
+#score {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #D2B48C; /* Tan */
+    min-height: 320px;
+    background-color: #fff; /* Manteniamo bianco per leggibilità spartito */
+    overflow-x: auto; /* Scroll orizzontale se necessario */
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(75, 56, 50, 0.1);
+}
+
+#score svg {
+    display: inline-block; /* Necessario per centrare correttamente */
+    max-width: 100%; /* Evita che l'SVG esca dal contenitore */
+}
+
+/* Stili VexFlow (per compatibilità, ma il colore è gestito da JS) */
+.vf-stem path, .vf-flag path, .vf-notehead path {
+    /* Colori di default gestiti da vexflow_renderer.js */
+     /* fill: #333 !important; */
+     /* stroke: #333 !important; */
+}
+
+/* Testo generato da VexFlow (es. tempo, nomi accordi - raramente usati qui) */
+.vf-annotation text {
+    fill: #555;
+    font-size: 0.9em;
+}
+
+/* Aggiusta padding per mobile se necessario */
+@media (max-width: 768px) {
+    body { margin: 10px; }
+    .controls, .status-area { padding: 10px; }
+    .controls label, .controls select, .controls button { margin: 3px 5px; padding: 6px 10px; }
+    .status-area p { margin: 5px 10px; font-size: 0.9em;}
+    h1 { font-size: 1.8em; margin-bottom: 20px;}
+}
