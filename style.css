@@ -1,23 +1,33 @@
 /**
  * style.css
- * Palette Beige/Marrone Chiaro
+ * Palette Beige/Marrone Chiaro - Overflow attivo - VERSIONE COMPLETA
  */
 
- body {
-    font-family: sans-serif;
+/* Reset base e font globale */
+* {
+    box-sizing: border-box; /* Calcolo padding/border all'interno della larghezza/altezza */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Stack font moderni */
     line-height: 1.6;
     margin: 20px;
     /* Sfondo principale - un beige molto chiaro */
     background-color: #F5F5DC; /* Beige */
     color: #4b3832; /* Marrone scuro per testo principale */
+    font-size: 16px; /* Dimensione base font */
 }
 
+/* Titolo principale */
 h1 {
     text-align: center;
     /* Marrone leggermente più scuro per il titolo */
     color: #6f4e37; /* Coffee Brown */
     margin-bottom: 30px;
     font-weight: bold;
+    font-size: 2em; /* Dimensione titolo */
 }
 
 /* Contenitori per controlli e stato */
@@ -40,7 +50,7 @@ h1 {
     padding: 8px 12px;
     border-radius: 4px;
     vertical-align: middle;
-    font-size: 0.95em; /* Leggermente più piccolo per allineamento */
+    font-size: 0.95em;
 }
 
 .controls label {
@@ -54,19 +64,30 @@ h1 {
     background-color: #FFFAF0; /* Floral White - sfondo select */
     color: #4b3832; /* Testo marrone scuro */
     cursor: pointer;
+    /* Stile per uniformare aspetto */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Aggiungi freccetta custom (opzionale) */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23%23C19A6B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 10px auto;
+    padding-right: 30px; /* Spazio per la freccetta */
 }
 .controls select:disabled {
     background-color: #EFEBE9; /* Sfondo più grigio/beige se disabilitato */
     cursor: not-allowed;
     opacity: 0.7;
+    background-image: none; /* Nasconde freccetta custom se disabilitato */
 }
 
 
 /* Pulsanti Start/Stop */
 .controls button {
     cursor: pointer;
-    /* Un marrone più deciso per i pulsanti */
-    background-color: #A0522D; /* Sienna */
+    /* Un marrone più deciso per i pulsanti (Default) */
+    /* background-color: #A0522D; */ /* Sienna - Rimosso per usare specifici */
     color: #FFFAF0; /* Testo molto chiaro (Floral White) */
     border: none;
     font-weight: bold;
@@ -79,8 +100,8 @@ h1 {
      color: white;
 }
 .controls button#start-button:hover:not(:disabled) {
-     background-color: #709670;
-     transform: translateY(-1px);
+     background-color: #709670; /* Più scuro su hover */
+     transform: translateY(-1px); /* Leggero effetto sollevamento */
 }
 
 .controls button#stop-button {
@@ -88,8 +109,8 @@ h1 {
       color: white;
 }
 .controls button#stop-button:hover:not(:disabled) {
-     background-color: #b04c4c;
-     transform: translateY(-1px);
+     background-color: #b04c4c; /* Più scuro su hover */
+     transform: translateY(-1px); /* Leggero effetto sollevamento */
 }
 
 
@@ -102,13 +123,15 @@ h1 {
     background-color: #D3D3D3; /* Grigio chiaro per disabilitato */
     color: #888888;
     opacity: 0.6;
+    transform: none; /* Nessun effetto hover/active su disabilitato */
 }
 
 /* Area di stato */
 .status-area {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content: space-around; /* Distribuisce spazio */
+    align-items: center; /* Allinea verticalmente */
+    flex-wrap: wrap; /* Va a capo su schermi piccoli */
     padding: 10px 20px;
     background-color: #FAF0E6; /* Linen - colore di sfondo leggermente diverso */
     border-color: #E0D6C4; /* Bordo ancora più chiaro */
@@ -118,61 +141,77 @@ h1 {
     margin: 8px 15px;
     font-size: 0.95em;
     color: #6f4e37; /* Coffee brown per testo */
-    white-space: nowrap;
+    white-space: nowrap; /* Evita che le etichette vadano a capo */
+    display: flex; /* Per allineare etichetta e span */
+    align-items: center;
 }
 
 /* Span dentro l'area di stato (valori) */
 .status-area span {
     font-weight: bold;
-    min-width: 80px;
+    min-width: 80px; /* Larghezza minima per allineamento */
     display: inline-block;
     color: #4b3832; /* Marrone scuro */
     /* Sfondo per evidenziare i valori */
     background-color: #EADDCA; /* Un beige leggermente più grigio/freddo */
     padding: 3px 8px;
     border-radius: 3px;
-    margin-left: 5px;
+    margin-left: 8px; /* Spazio tra etichetta e valore */
     text-align: right;
     font-family: monospace; /* Font mono per numeri e note */
-    font-size: 1.05em;
+    font-size: 1.05em; /* Leggermente più grande */
 }
 
 /* Area dello spartito VexFlow */
 #score {
     margin-top: 20px;
-    padding: 20px;
+    padding: 20px; /* Padding interno */
     border: 1px solid #D2B48C; /* Tan */
-    min-height: 320px;
-    background-color: #fff; /* Manteniamo bianco per leggibilità spartito */
-    overflow-x: auto; /* Scroll orizzontale se necessario */
-    text-align: center;
+    min-height: 320px; /* Altezza minima per non collassare */
+    background-color: #fff; /* Sfondo bianco per leggibilità spartito */
+    text-align: center; /* Centra l'SVG se più stretto del div */
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(75, 56, 50, 0.1);
+    box-shadow: 0 2px 5px rgba(75, 56, 50, 0.1); /* Ombra leggera */
+
+    /* === Abilita scroll orizzontale se contenuto eccede === */
+    overflow-x: auto;
+    overflow-y: hidden; /* Nasconde scroll verticale se non serve */
 }
 
 #score svg {
-    display: inline-block; /* Necessario per centrare correttamente */
-    max-width: 100%; /* Evita che l'SVG esca dal contenitore */
+    display: inline-block; /* Necessario per centrare e permettere overflow */
+    /* === NESSUN MAX-WIDTH === */
 }
 
-/* Stili VexFlow (per compatibilità, ma il colore è gestito da JS) */
+/* Stili VexFlow (opzionali, il colore note è gestito da JS) */
 .vf-stem path, .vf-flag path, .vf-notehead path {
-    /* Colori di default gestiti da vexflow_renderer.js */
-     /* fill: #333 !important; */
-     /* stroke: #333 !important; */
+    /* Non impostare fill/stroke qui se li gestisci con setStyle in JS */
 }
 
-/* Testo generato da VexFlow (es. tempo, nomi accordi - raramente usati qui) */
-.vf-annotation text {
+.vf-annotation text { /* Testo note/accordi sopra il rigo */
     fill: #555;
     font-size: 0.9em;
+    font-weight: bold;
 }
 
-/* Aggiusta padding per mobile se necessario */
+/* Media Query per schermi più piccoli */
 @media (max-width: 768px) {
     body { margin: 10px; }
     .controls, .status-area { padding: 10px; }
-    .controls label, .controls select, .controls button { margin: 3px 5px; padding: 6px 10px; }
+    .controls label, .controls select, .controls button { margin: 4px 6px; padding: 7px 10px; font-size: 0.9em; }
+    .controls select { min-width: 150px; } /* Riduci larghezza minima select */
+    .status-area { justify-content: center; } /* Centra elementi su mobile */
     .status-area p { margin: 5px 10px; font-size: 0.9em;}
+    .status-area span { min-width: 70px; font-size: 1em; }
     h1 { font-size: 1.8em; margin-bottom: 20px;}
+    #score { min-height: 280px; padding: 15px; }
+}
+
+@media (max-width: 480px) {
+    .controls { display: flex; flex-direction: column; align-items: stretch; } /* Controlli in colonna */
+    .controls label, .controls select, .controls button { width: 90%; margin: 5px auto; } /* Larghezza quasi piena */
+    .status-area { flex-direction: column; align-items: center; } /* Stato in colonna */
+    .status-area p { text-align: center; width: 80%; }
+    .status-area span { text-align: center; display: block; margin-left: 0; margin-top: 3px; }
+    h1 { font-size: 1.5em; }
 }

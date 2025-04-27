@@ -1,303 +1,236 @@
 /**
  * js/vexflow_renderer.js
  * Renderer per esercizi musicali usando VexFlow.
- * **VERSIONE COMPLETA con CLEF ESPLICITO in StaveNote**
+ * **VERSIONE CON SISTEMI MULTIPLI (MULTI-LINE STAVES)**
  */
 
-// Importa le classi necessarie da VexFlow
-const { Factory, Stave, StaveNote, Formatter, Voice, Beam, Accidental, StaveConnector, TickContext } = Vex.Flow;
+const { Factory, Stave, StaveNote, Formatter, Voice, Beam, Accidental, StaveConnector, TickContext, Fraction, Note } = Vex.Flow;
 
-// --- Funzioni Helper ---
+// --- Costanti ---
+const MEASURES_PER_LINE = 4; // Quante battute per riga (puoi aggiustare)
+const SYSTEM_SPACING = 200; // Spazio verticale tra i sistemi (grand staff)
+const SINGLE_STAVE_SYSTEM_SPACING = 150; // Spazio verticale (single staff)
+const STAVE_START_X = 15; // Margine sinistro
+const STAVE_START_Y_GRAND = 40; // Y del primo pentagramma treble (grand staff)
+const STAVE_START_Y_SINGLE = 60; // Y del primo pentagramma (single staff)
+const STAVE_VERTICAL_DISTANCE = 100; // Distanza tra treble e bass nel grand staff
 
-/**
- * Converte una stringa di durata VexFlow (es. 'q', 'h.', '8d') in tick.
- * @param {string} durationString La stringa della durata.
- * @returns {number} Il numero di tick VexFlow.
- */
+// --- Funzioni Helper (durationToTicks rimane uguale) ---
 function durationToTicks(durationString) {
-    const BEAT_TICKS = Vex.Flow.RESOLUTION / 4; // Ticks per semiminima (quarto)
-    let ticks = 0;
-    // Rimuove punti e 'd' (per durata base)
+    const BEAT_TICKS = Vex.Flow.RESOLUTION / 4; let ticks = 0;
     const baseDuration = durationString.replace('.', '').replace('d', '');
-
-    switch (baseDuration) {
-        case 'w': ticks = 4 * BEAT_TICKS; break;  // Semibreve
-        case 'h': ticks = 2 * BEAT_TICKS; break;  // Minima
-        case 'q': ticks = BEAT_TICKS; break;      // Semiminima
-        case '8': ticks = BEAT_TICKS / 2; break;  // Croma
-        case '16': ticks = BEAT_TICKS / 4; break; // Semicroma
-        case '32': ticks = BEAT_TICKS / 8; break; // Biscroma
-        default: ticks = BEAT_TICKS; // Default a semiminima se sconosciuto
-    }
-
-    // Gestione punti (aggiunge metà del valore per ogni punto)
-    if (durationString.includes('.')) {
-        let numDots = (durationString.match(/\./g) || []).length;
-        let dotValue = ticks;
-        for (let i = 0; i < numDots; i++) {
-            dotValue /= 2;
-            ticks += dotValue;
-        }
-    }
-    // Gestione 'd' per punto singolo (alternativa a '.')
-    else if (durationString.endsWith('d')) {
-         ticks = ticks * 1.5; // Aggiunge metà del valore
-    }
-
+    switch (baseDuration) { case 'w': ticks = 4 * BEAT_TICKS; break; case 'h': ticks = 2 * BEAT_TICKS; break; case 'q': ticks = BEAT_TICKS; break; case '8': ticks = BEAT_TICKS / 2; break; case '16': ticks = BEAT_TICKS / 4; break; case '32': ticks = BEAT_TICKS / 8; break; default: ticks = BEAT_TICKS; }
+    if (durationString.includes('.')) { let numDots = (durationString.match(/\./g) || []).length; let dotValue = ticks; for (let i = 0; i < numDots; i++) { dotValue /= 2; ticks += dotValue; } }
+    else if (durationString.endsWith('d')) { ticks = ticks * 1.5; }
     return ticks;
 }
 
-/**
- * Imposta l'area di rendering VexFlow nel DOM.
- * @param {string} elementId ID dell'elemento div per il rendering.
- * @param {boolean} needsGrandStaff Indica se serve spazio per il doppio pentagramma.
- * @returns {object|null} Oggetto con factory, context, scoreDiv, rendererWidth, rendererHeight o null se fallisce.
- */
-function setupScore(elementId, needsGrandStaff) {
-    const scoreDiv = document.getElementById(elementId);
-    if (!scoreDiv) {
-        console.error(`Element with id "${elementId}" not found.`);
-        return null;
+// Helper per calcolare i tick per battuta
+function getTicksPerMeasure(timeSignature) {
+    try {
+        if (!timeSignature) return Vex.Flow.RESOLUTION; // Default a 4/4 (1 beat = resolution/4)
+        const beats = parseInt(timeSignature.split('/')[0]);
+        const beatValue = parseInt(timeSignature.split('/')[1]);
+        if (isNaN(beats) || isNaN(beatValue) || beatValue === 0) return Vex.Flow.RESOLUTION;
+        // Resolution = ticks per whole note. Beat value 4 = quarter note.
+        return (Vex.Flow.RESOLUTION / beatValue) * beats;
+    } catch (e) {
+        console.error("Error parsing time signature:", timeSignature, e);
+        return Vex.Flow.RESOLUTION; // Fallback
     }
-    scoreDiv.innerHTML = ''; // Pulisce il contenuto precedente
-    // Calcola larghezza, usa 800px come fallback se l'elemento non ha larghezza visibile
-    const rendererWidth = scoreDiv.clientWidth > 0 ? scoreDiv.clientWidth : 800;
-    // Altezza dipende se è pentagramma singolo o doppio
-    const rendererHeight = needsGrandStaff ? 300 : 200;
-
-    // Crea la factory VexFlow
-    const factory = new Factory({
-        renderer: { elementId: elementId, width: rendererWidth, height: rendererHeight }
-    });
-    const context = factory.getContext();
-    context.setFont('Arial', 10); // Imposta font (opzionale)
-
-    return { factory, context, scoreDiv, rendererWidth, rendererHeight };
 }
 
-/**
- * Crea un array di oggetti Vex.Flow.StaveNote stilizzati a partire dai dati.
- * @param {Array} noteDataArray Array di oggetti { keys, duration, status?, midiValue? }.
- * @param {string} clefType Il tipo di chiave ('treble' o 'bass') per queste note.
- * @param {string} defaultFill Colore di riempimento di default.
- * @param {string} defaultStroke Colore del bordo di default.
- * @returns {Array<Vex.Flow.StaveNote>} Array di StaveNote stilizzate e con chiave specificata.
- */
-function createStyledStaveNotes(noteDataArray, clefType, defaultFill = '#333', defaultStroke = '#333') {
-    if (!noteDataArray) return []; // Ritorna array vuoto se non ci sono dati
+// Helper per dividere le note in segmenti basati sulle battute
+function segmentNotesByMeasure(notes, ticksPerMeasure, measuresPerLine) {
+    if (!notes || notes.length === 0) return [];
+    const segments = [];
+    let currentSegment = [];
+    let currentTickCount = 0;
+    const ticksPerLine = ticksPerMeasure * measuresPerLine;
 
-    return noteDataArray.map((noteData, index) => {
-        // 1. Crea oggetto di configurazione per StaveNote, aggiungendo la chiave
-        const noteConfig = {
-            keys: noteData.keys,
-            duration: noteData.duration,
-            clef: clefType // <<====== CHIAVE ESPLICITA PER POSIZIONAMENTO
-            // VexFlow userà automaticamente altri campi come 'dots' se presenti in noteData
-        };
-        const staveNote = new StaveNote(noteConfig);
-
-        // 2. Aggiungi Accidentali Visibili (se specificati nel nome della nota)
-        noteData.keys.forEach((key, keyIndex) => {
-            const keyParts = key.split('/');
-            const pitchName = keyParts[0]; // Es: "f#", "b", "bb"
-
-            if (pitchName.endsWith('##')) {
-                staveNote.addModifier(new Accidental('##'), keyIndex);
-            } else if (pitchName.endsWith('#')) {
-                 staveNote.addModifier(new Accidental('#'), keyIndex);
-            } else if (pitchName.endsWith('bb')) {
-                // Nome finisce in 'bb', aggiungi un SINGOLO bemolle visivo
-                staveNote.addModifier(new Accidental('b'), keyIndex);
-            } else if (pitchName.length > 1 && pitchName.endsWith('b')) {
-                // Nome finisce in 'b' ma NON è 'b' naturale (es. "gb")
-                staveNote.addModifier(new Accidental('b'), keyIndex);
-            }
-            // Le note naturali (es. "c/4", "b/4") non ricevono accidentali qui.
-            // Quelle richieste dalla tonalità verranno gestite da VexFlow stesso.
-        });
-
-        // 3. Aggiungi Punti (se presenti nella stringa duration)
-        // Vexflow 4+ gestisce la 'd' (es 'qd') automaticamente, ma '.' no.
-         if (noteData.duration.includes('.')) {
-             let numDots = (noteData.duration.match(/\./g) || []).length;
-             for (let i = 0; i < numDots; i++) {
-                 staveNote.addDotToAll(); // Aggiunge punto a tutte le note nell'accordo/nota
-             }
-         }
-
-        // 4. Applica Stile basato sullo stato (passato da main.js)
-        let fillStyle = defaultFill;
-        let strokeStyle = defaultStroke;
-        switch (noteData.status) {
-            case 'correct':
-                fillStyle = '#28a745'; // Verde
-                strokeStyle = '#1c7430';
-                break;
-            case 'incorrect': // Stato usato se la nota era attesa ma si è suonato altro
-                fillStyle = 'rgba(220, 53, 69, 0.4)'; // Rosso semi-trasparente
-                strokeStyle = '#a71d2a';
-                break;
-            case 'expected': // Stato per note in attesa (modalità libera)
-                fillStyle = 'rgba(0, 123, 255, 0.3)'; // Blu semi-trasparente
-                strokeStyle = 'rgba(0, 123, 255, 0.5)';
-                break;
-            // 'pending' userà i colori di default
+    notes.forEach(note => {
+        const noteTicks = durationToTicks(note.duration);
+        // Se aggiungere questa nota supera il limite della riga *e* il segmento corrente non è vuoto
+        if (currentTickCount + noteTicks > ticksPerLine && currentSegment.length > 0) {
+            segments.push(currentSegment); // Finalizza il segmento corrente
+            currentSegment = [note];       // Inizia un nuovo segmento con la nota attuale
+            currentTickCount = noteTicks; // Resetta i tick
+        } else {
+            currentSegment.push(note);
+            currentTickCount += noteTicks;
         }
-        staveNote.setStyle({ fillStyle: fillStyle, strokeStyle: strokeStyle });
+    });
+    // Aggiunge l'ultimo segmento se non è vuoto
+    if (currentSegment.length > 0) {
+        segments.push(currentSegment);
+    }
+    return segments;
+}
 
-        // 5. Ritorna la nota configurata
-        return staveNote;
+
+// Helper per creare le StaveNote (invariato, ma ora usato per segmenti)
+function createStyledStaveNotes(noteDataArray, clefType, defaultFill = '#333', defaultStroke = '#333') { /* ... (Codice COMPLETO da risposta precedente) ... */
+     if (!noteDataArray) return [];
+    return noteDataArray.map((noteData) => {
+        const isRest = noteData.keys[0].toLowerCase().startsWith('r/');
+        const noteConfig = { keys: isRest ? ["b/4"] : noteData.keys, duration: noteData.duration.replace('d','.'), clef: clefType, type: isRest ? 'r' : undefined };
+        const staveNote = new StaveNote(noteConfig);
+        if (!isRest) {
+            noteData.keys.forEach((key, keyIndex) => { const keyParts = key.split('/'); const pitchName = keyParts[0]; if (pitchName.endsWith('##')) staveNote.addModifier(new Accidental('##'), keyIndex); else if (pitchName.endsWith('#')) staveNote.addModifier(new Accidental('#'), keyIndex); else if (pitchName.endsWith('bb')) staveNote.addModifier(new Accidental('b'), keyIndex); else if (pitchName.length > 1 && pitchName.endsWith('b')) staveNote.addModifier(new Accidental('b'), keyIndex); });
+            if (noteData.duration.includes('.')) { let numDots = (noteData.duration.match(/\./g) || []).length; for (let i = 0; i < numDots; i++) staveNote.addDotToAll(); }
+        }
+        let fillStyle = defaultFill; let strokeStyle = defaultStroke; if (!isRest) { switch (noteData.status) { case 'correct': fillStyle = '#28a745'; strokeStyle = '#1c7430'; break; case 'incorrect': fillStyle = 'rgba(220, 53, 69, 0.4)'; strokeStyle = '#a71d2a'; break; case 'expected': fillStyle = 'rgba(0, 123, 255, 0.3)'; strokeStyle = 'rgba(0, 123, 255, 0.5)'; break; } } staveNote.setStyle({ fillStyle: fillStyle, strokeStyle: strokeStyle }); return staveNote;
     });
 }
+
 
 // --- Funzione Principale Esportata ---
-/**
- * Renderizza l'esercizio musicale sul pentagramma specificato.
- * @param {string} elementId ID dell'elemento div contenitore.
- * @param {object} exercise Oggetto esercizio con i dati delle note.
- */
 export function renderExercise(elementId, exercise) {
-    // Determina se usare doppio pentagramma (Grand Staff)
+    const scoreDiv = document.getElementById(elementId);
+    if (!scoreDiv) { console.error(`Elemento "${elementId}" non trovato.`); return; }
+    scoreDiv.innerHTML = ''; // Pulisce prima di disegnare
+
     const useGrandStaff = exercise.staveLayout === 'grand' || (exercise.notesTreble && exercise.notesBass);
+    const rendererWidth = scoreDiv.clientWidth > 0 ? scoreDiv.clientWidth - 40 : 760; // Larghezza utile (meno padding)
+    const ticksPerMeasure = getTicksPerMeasure(exercise.timeSignature || "4/4");
+    const ticksPerLine = ticksPerMeasure * MEASURES_PER_LINE;
 
-    // Imposta l'area di rendering
-    const setup = setupScore(elementId, useGrandStaff);
-    if (!setup) return; // Esce se l'elemento non è stato trovato
-    const { factory, context, scoreDiv, rendererWidth } = setup;
+    // --- Suddividi le note in segmenti per riga ---
+    const trebleSegments = segmentNotesByMeasure(exercise.notesTreble, ticksPerMeasure, MEASURES_PER_LINE);
+    const bassSegments = segmentNotesByMeasure(exercise.notesBass, ticksPerMeasure, MEASURES_PER_LINE);
+    // Supporto per vecchio formato 'notes' (assume treble se non specificato)
+    const singleStaveSegments = segmentNotesByMeasure(exercise.notes, ticksPerMeasure, MEASURES_PER_LINE);
 
-    // --- Calcolo Larghezza Pentagramma ---
-    // Raccogli tutte le note definite per stimare la durata totale
-    const notesForWidthCalc = [];
-    if (exercise.notesTreble) notesForWidthCalc.push(...exercise.notesTreble);
-    if (exercise.notesBass) notesForWidthCalc.push(...exercise.notesBass);
-    if (exercise.notes) notesForWidthCalc.push(...exercise.notes); // Supporto vecchio formato
+    const numSystems = useGrandStaff ? Math.max(trebleSegments.length, bassSegments.length) : singleStaveSegments.length;
+    if (numSystems === 0) { scoreDiv.innerHTML = "<p>Nessuna nota da visualizzare.</p>"; return; }
 
-    // Calcola i tick totali (prendi il massimo tra le due voci se grand staff)
-    let totalTicks = 0;
-    if (useGrandStaff) {
-        const ticksTreble = exercise.notesTreble?.reduce((sum, note) => sum + durationToTicks(note.duration), 0) ?? 0;
-        const ticksBass = exercise.notesBass?.reduce((sum, note) => sum + durationToTicks(note.duration), 0) ?? 0;
-        totalTicks = Math.max(ticksTreble, ticksBass);
-    } else {
-         totalTicks = notesForWidthCalc.reduce((sum, note) => sum + durationToTicks(note.duration), 0) ?? 0;
-    }
+    // Altezza totale stimata
+    const totalHeight = (useGrandStaff ? STAVE_START_Y_GRAND + STAVE_VERTICAL_DISTANCE : STAVE_START_Y_SINGLE) +
+                        (numSystems * (useGrandStaff ? SYSTEM_SPACING : SINGLE_STAVE_SYSTEM_SPACING)) + 50; // Aggiungi padding sotto
 
-    // Stima la larghezza minima necessaria e calcola la larghezza effettiva
-    const estimatedMinWidth = (totalTicks / Vex.Flow.RESOLUTION) * (useGrandStaff ? 200 : 180); // Fattore moltiplicativo per pixel/beat
-    const staveWidth = Math.max(rendererWidth * 0.9, estimatedMinWidth); // Usa 90% larghezza o minima stimata
-    const staveStartX = 20; // Margine sinistro
-    const staveTrebleY = useGrandStaff ? 40 : 60; // Posizione Y pentagramma superiore (o unico)
-    const staveBassY = staveTrebleY + 100; // Posizione Y pentagramma inferiore (solo se grand staff)
+    // Crea Factory con altezza calcolata
+    const factory = new Factory({ renderer: { elementId: elementId, width: rendererWidth + 40, height: totalHeight } });
+    const context = factory.getContext();
+    context.setFont('Arial', 10);
 
-    // --- Disegno Pentagrammi e Note ---
+    let currentY_Treble = useGrandStaff ? STAVE_START_Y_GRAND : STAVE_START_Y_SINGLE;
+    let currentY_Bass = STAVE_START_Y_GRAND + STAVE_VERTICAL_DISTANCE; // Usato solo per grand staff
+    let previousTrebleStave = null;
+    let previousBassStave = null;
+
     try {
-        let staveTreble = null, staveBass = null; // Riferimenti ai pentagrammi VexFlow
-        const staves = []; // Array per contenere i pentagrammi (utile per formattazione)
+        // --- Ciclo per disegnare ogni sistema (riga) ---
+        for (let i = 0; i < numSystems; i++) {
+            const staveWidth = rendererWidth; // Usa larghezza piena per ogni riga
+            let staveTreble = null, staveBass = null;
+            let notesVexTreble = []; let notesVexBass = [];
+            const voicesToFormat = []; let voiceTreble = null; let voiceBass = null;
+            const isFirstSystem = (i === 0);
 
-        // 1. Configurazione e Disegno Pentagrammi
-        if (useGrandStaff) {
-            // Pentagramma Violino (Superiore)
-            staveTreble = new Stave(staveStartX, staveTrebleY, staveWidth).addClef('treble');
-            if (exercise.keySignature) staveTreble.addKeySignature(exercise.keySignature);
-            if (exercise.timeSignature) staveTreble.addTimeSignature(exercise.timeSignature);
-            staveTreble.setContext(context).draw();
-            staves.push(staveTreble);
+            // Y corrente per questo sistema
+            const systemY_Treble = useGrandStaff ? STAVE_START_Y_GRAND + (i * SYSTEM_SPACING) : STAVE_START_Y_SINGLE + (i * SINGLE_STAVE_SYSTEM_SPACING);
+            const systemY_Bass = STAVE_START_Y_GRAND + STAVE_VERTICAL_DISTANCE + (i * SYSTEM_SPACING);
 
-            // Pentagramma Basso (Inferiore)
-            staveBass = new Stave(staveStartX, staveBassY, staveWidth).addClef('bass');
-            if (exercise.keySignature) staveBass.addKeySignature(exercise.keySignature); // Usa stessa tonalità
-            if (exercise.timeSignature) staveBass.addTimeSignature(exercise.timeSignature); // Usa stesso tempo
-            staveBass.setContext(context).draw();
-            staves.push(staveBass);
+            if (useGrandStaff) {
+                // Disegna Stave Treble
+                staveTreble = new Stave(STAVE_START_X, systemY_Treble, staveWidth);
+                if (isFirstSystem) { // Aggiungi elementi solo al primo sistema
+                    staveTreble.addClef('treble');
+                    if (exercise.keySignature) staveTreble.addKeySignature(exercise.keySignature);
+                    if (exercise.timeSignature) staveTreble.addTimeSignature(exercise.timeSignature);
+                } else {
+                    staveTreble.addClef('treble'); // Chiave sempre necessaria all'inizio della riga
+                }
+                staveTreble.setContext(context).draw();
 
-            // Connettori per Grand Staff (graffa, linea iniziale comune)
-            new StaveConnector(staveTreble, staveBass).setType(StaveConnector.type.GRAND_STAFF).setContext(context).draw();
-            new StaveConnector(staveTreble, staveBass).setType(StaveConnector.type.BRACE).setContext(context).draw();
-            new StaveConnector(staveTreble, staveBass).setType(StaveConnector.type.SINGLE_LEFT).setContext(context).draw();
+                // Disegna Stave Bass
+                staveBass = new Stave(STAVE_START_X, systemY_Bass, staveWidth);
+                if (isFirstSystem) {
+                     staveBass.addClef('bass');
+                     if (exercise.keySignature) staveBass.addKeySignature(exercise.keySignature);
+                     if (exercise.timeSignature) staveBass.addTimeSignature(exercise.timeSignature);
+                } else {
+                     staveBass.addClef('bass');
+                }
+                staveBass.setContext(context).draw();
 
-        } else {
-             // Pentagramma Singolo
-             const singleStaveY = staveTrebleY; // Usa la Y superiore
-             const clef = exercise.clef || 'treble'; // Default a treble se non specificato
-             const singleStave = new Stave(staveStartX, singleStaveY, staveWidth).addClef(clef);
-             if (exercise.keySignature) singleStave.addKeySignature(exercise.keySignature);
-             if (exercise.timeSignature) singleStave.addTimeSignature(exercise.timeSignature);
-             singleStave.setContext(context).draw();
-             staves.push(singleStave);
+                 // Connettori
+                if (isFirstSystem) { // Brace e linea iniziale solo per il primo sistema
+                     new StaveConnector(staveTreble, staveBass).setType(StaveConnector.type.BRACE).setContext(context).draw();
+                     new StaveConnector(staveTreble, staveBass).setType(StaveConnector.type.SINGLE_LEFT).setContext(context).draw();
+                 }
+                 // Linea che collega i due pentagrammi all'inizio di ogni sistema
+                 new StaveConnector(staveTreble, staveBass).setType(StaveConnector.type.SINGLE_LEFT).setContext(context).draw();
 
-             // Assegna a staveTreble o staveBass per riferimento futuro
-             if (clef === 'treble') staveTreble = singleStave; else staveBass = singleStave;
-             // Linea iniziale singola
-             new StaveConnector(singleStave, singleStave).setType(StaveConnector.type.SINGLE_LEFT).setContext(context).draw();
-        }
 
-        // 2. Creazione Note VexFlow STILIZZATE (passando la chiave corretta)
-        let notesVexTreble = []; // Array di oggetti Vex.Flow.StaveNote
-        let notesVexBass = [];
-        const voicesToFormat = []; // Array di oggetti Vex.Flow.Voice
-        let voiceTreble = null; // Riferimento alla voce treble
-        let voiceBass = null;   // Riferimento alla voce bass
-
-        if (useGrandStaff) {
-            // Crea note e voce per Treble (passando 'treble')
-            if (exercise.notesTreble && exercise.notesTreble.length > 0) {
-                notesVexTreble = createStyledStaveNotes(exercise.notesTreble, 'treble');
-                voiceTreble = new Voice({ num_beats: totalTicks / (Vex.Flow.RESOLUTION / 4) , beat_value: 4 }).setStrict(false).addTickables(notesVexTreble);
-                voicesToFormat.push(voiceTreble);
+            } else { // Pentagramma Singolo
+                const clef = exercise.clef || 'treble';
+                staveTreble = new Stave(STAVE_START_X, systemY_Treble, staveWidth); // Assume treble o usa var dedicata
+                 if (isFirstSystem) {
+                    staveTreble.addClef(clef);
+                    if (exercise.keySignature) staveTreble.addKeySignature(exercise.keySignature);
+                    if (exercise.timeSignature) staveTreble.addTimeSignature(exercise.timeSignature);
+                 } else {
+                     staveTreble.addClef(clef);
+                 }
+                 staveTreble.setContext(context).draw();
+                 new StaveConnector(staveTreble, staveTreble).setType(StaveConnector.type.SINGLE_LEFT).setContext(context).draw();
+                 // Assegna a treble o bass per riferimento note
+                 if (clef === 'bass') staveBass = staveTreble;
             }
-            // Crea note e voce per Bass (passando 'bass')
-            if (exercise.notesBass && exercise.notesBass.length > 0) {
-                console.log(">>> DEBUG DATI BASSO per createStyledStaveNotes:", JSON.stringify(exercise.notesBass)); // Log Dati
-                notesVexBass = createStyledStaveNotes(exercise.notesBass, 'bass');
-                voiceBass = new Voice({ num_beats: totalTicks / (Vex.Flow.RESOLUTION / 4), beat_value: 4 }).setStrict(false).addTickables(notesVexBass);
-                voicesToFormat.push(voiceBass);
-            }
-        } else {
-            // Gestione pentagramma singolo
-             const clefType = exercise.clef || 'treble';
-             const notesToRender = exercise.notes || (clefType === 'bass' ? exercise.notesBass : exercise.notesTreble);
-             if (notesToRender && notesToRender.length > 0) {
-                 console.log(`>>> DEBUG DATI SINGLE (${clefType}) per createStyledStaveNotes:`, JSON.stringify(notesToRender));
-                 // Passa la chiave corretta ('treble' o 'bass')
-                 const styledNotes = createStyledStaveNotes(notesToRender, clefType);
-                 const singleVoice = new Voice({ num_beats: totalTicks / (Vex.Flow.RESOLUTION / 4), beat_value: 4 }).setStrict(false).addTickables(styledNotes);
-                 voicesToFormat.push(singleVoice);
-                 // Assegna note e voce per riferimento
-                 if (clefType === 'bass') { notesVexBass = styledNotes; voiceBass = singleVoice; }
-                 else { notesVexTreble = styledNotes; voiceTreble = singleVoice; }
-            }
-        }
 
-        // 3. Formattazione e Disegno Voci e Travature
-        if (voicesToFormat.length > 0) {
-            // Usa Formatter per allineare le voci (essenziale se > 1 voce)
-            const formatter = new Formatter().joinVoices(voicesToFormat);
-            // Calcola larghezza disponibile per le note (un po' meno del pentagramma)
-            const formatWidth = staveWidth * 0.9;
-            formatter.format(voicesToFormat, formatWidth);
+            // --- Prepara Note per questo Sistema ---
+            if (useGrandStaff) {
+                if (trebleSegments[i]?.length > 0) {
+                    notesVexTreble = createStyledStaveNotes(trebleSegments[i], 'treble');
+                    if(notesVexTreble.length > 0) { voiceTreble = new Voice().setMode(Voice.Mode.SOFT).addTickables(notesVexTreble); voicesToFormat.push(voiceTreble); }
+                }
+                 if (bassSegments[i]?.length > 0) {
+                     console.log(`>>> DEBUG BASSO - Sistema ${i+1}:`, JSON.stringify(bassSegments[i]));
+                     notesVexBass = createStyledStaveNotes(bassSegments[i], 'bass');
+                    if(notesVexBass.length > 0) { voiceBass = new Voice().setMode(Voice.Mode.SOFT).addTickables(notesVexBass); voicesToFormat.push(voiceBass); }
+                }
+            } else { // Single Stave
+                const clefType = exercise.clef || 'treble';
+                if (singleStaveSegments[i]?.length > 0) {
+                    console.log(`>>> DEBUG SINGLE ${clefType} - Sistema ${i+1}:`, JSON.stringify(singleStaveSegments[i]));
+                    const styledNotes = createStyledStaveNotes(singleStaveSegments[i], clefType);
+                    if(styledNotes.length > 0) {
+                        const singleVoice = new Voice().setMode(Voice.Mode.SOFT).addTickables(styledNotes);
+                        voicesToFormat.push(singleVoice);
+                        if (clefType === 'bass') { notesVexBass = styledNotes; voiceBass = singleVoice; }
+                        else { notesVexTreble = styledNotes; voiceTreble = singleVoice; }
+                    }
+                }
+            }
 
-            // Disegna ogni voce sul pentagramma corretto
-            if (voiceTreble && staveTreble) {
-                 voiceTreble.draw(context, staveTreble);
-                 // Aggiungi travature (beams) per la voce treble
-                 Beam.generateBeams(voiceTreble.getTickables())
-                     .forEach(beam => beam.setContext(context).draw());
+             // --- Formatta e Disegna Voci per questo Sistema ---
+             if (voicesToFormat.length > 0) {
+                const formatter = new Formatter().joinVoices(voicesToFormat);
+                const formatWidth = staveWidth - 40; // Spazio formattazione per sistema
+                try {
+                    // Usa minTotalTicks per la formattazione per evitare errori se una voce è vuota
+                    formatter.format(voicesToFormat, formatWidth > 0 ? formatWidth : undefined, { align_rests: true });
+                } catch (e) { console.warn(`Formatter error system ${i+1}:`, e); }
+
+                // Disegna le voci
+                if (voiceTreble && staveTreble) {
+                    voiceTreble.draw(context, staveTreble);
+                    Beam.generateBeams(voiceTreble.getTickables()).forEach(beam => beam.setContext(context).draw());
+                }
+                if (voiceBass && staveBass) {
+                    voiceBass.draw(context, staveBass);
+                    Beam.generateBeams(voiceBass.getTickables()).forEach(beam => beam.setContext(context).draw());
+                }
             }
-             if (voiceBass && staveBass) {
-                 voiceBass.draw(context, staveBass);
-                  // Aggiungi travature (beams) per la voce bass
-                 Beam.generateBeams(voiceBass.getTickables())
-                     .forEach(beam => beam.setContext(context).draw());
-            }
-        } else {
-            // Messaggio se non ci sono note nell'esercizio
-            console.log("Nessuna nota da renderizzare.");
-            scoreDiv.innerHTML += '<p>Esercizio vuoto o dati non validi.</p>';
-        }
+
+            previousTrebleStave = staveTreble; // Salva per eventuali connettori tra sistemi
+            previousBassStave = staveBass;
+
+        } // --- Fine ciclo for sui sistemi ---
+
     } catch (error) {
-        // Gestione errori VexFlow
-        console.error("Errore durante il rendering VexFlow:", error);
-        // Mostra messaggio di errore all'utente nel div dello spartito
-        scoreDiv.innerHTML = `<p style="color: red; font-family: monospace; white-space: pre-wrap;">Errore VexFlow: ${error.message}\n${error.stack}</p>`;
+        console.error("Errore generale rendering VexFlow:", error);
+        scoreDiv.innerHTML = `<p style="color: red;">Errore VexFlow: ${error.message}</p>`;
     }
 }
