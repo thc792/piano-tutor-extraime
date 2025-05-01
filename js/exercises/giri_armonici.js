@@ -96,7 +96,306 @@ const giriArmoniciExercises = [
     { id: "blues-8bar-G7", name: "8 Bar Blues (G - 7th)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 5, notesTreble: [ { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] } ], notesBass: [ { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["d/3"], duration: "w", midiValue: 50 } ] },
     { id: "blues-8bar-F7", name: "8 Bar Blues (F - 7th)", category: "giri_armonici", staveLayout: "grand", keySignature: "Bb", timeSignature: "4/4", repetitions: 5, notesTreble: [ { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, { keys: ["bb/3", "d/4", "f/4", "ab/4"], duration: "w", midiValues: [58, 62, 65, 68] }, { keys: ["bb/3", "d/4", "f/4", "ab/4"], duration: "w", midiValues: [58, 62, 65, 68] }, { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] } ], notesBass: [ { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["c/3"], duration: "w", midiValue: 48 } ] },
 
+    { id: "jazz-ii-V-I-Bbmaj-12bar", name: "Jazz ii-V-I (Bb Maj - 12 Bar Feel)", category: "giri_armonici", staveLayout: "grand", keySignature: "Bb", timeSignature: "4/4", repetitions: 3,
+        notesTreble: [ // ii | V | I | I | ii | V | I | I | ii | V | I | Turnaround V
+            { keys: ["c/4", "eb/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 63, 67, 70] }, // Cm7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }, // BbMaj7
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }, // BbMaj7
+            { keys: ["c/4", "eb/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 63, 67, 70] }, // Cm7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }, // BbMaj7
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }, // BbMaj7
+            { keys: ["c/4", "eb/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 63, 67, 70] }, // Cm7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }, // BbMaj7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }  // F7 (Turnaround)
+        ],
+        notesBass: [
+            { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/3"], duration: "w", midiValue: 53 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["bb/2"], duration: "w", midiValue: 46 },
+            { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/3"], duration: "w", midiValue: 53 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["bb/2"], duration: "w", midiValue: 46 },
+            { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/3"], duration: "w", midiValue: 53 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["f/3"], duration: "w", midiValue: 53 }
+        ] },
+    { id: "jazz-ii-V-i-Gm-12bar", name: "Jazz ii°-V-i (Gm - 12 Bar Feel)", category: "giri_armonici", staveLayout: "grand", keySignature: "Gm", timeSignature: "4/4", repetitions: 3,
+        notesTreble: [ // ii° | V7 | i | i | ii° | V7 | i | i | ii° | V7 | i | Turnaround V7
+            { keys: ["a/4", "c/5", "eb/5", "g/5"], duration: "w", midiValues: [69, 72, 75, 79] }, // Am7b5
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7
+            { keys: ["g/4", "bb/4", "d/5", "f/5"], duration: "w", midiValues: [67, 70, 74, 77] }, // Gm7
+            { keys: ["g/4", "bb/4", "d/5", "f/5"], duration: "w", midiValues: [67, 70, 74, 77] }, // Gm7
+            { keys: ["a/4", "c/5", "eb/5", "g/5"], duration: "w", midiValues: [69, 72, 75, 79] }, // Am7b5
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7
+            { keys: ["g/4", "bb/4", "d/5", "f/5"], duration: "w", midiValues: [67, 70, 74, 77] }, // Gm7
+            { keys: ["g/4", "bb/4", "d/5", "f/5"], duration: "w", midiValues: [67, 70, 74, 77] }, // Gm7
+            { keys: ["a/4", "c/5", "eb/5", "g/5"], duration: "w", midiValues: [69, 72, 75, 79] }, // Am7b5
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7
+            { keys: ["g/4", "bb/4", "d/5", "f/5"], duration: "w", midiValues: [67, 70, 74, 77] }, // Gm7
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }  // D7 (Turnaround)
+        ],
+        notesBass: [
+             { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["g/3"], duration: "w", midiValue: 55 },
+             { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["g/3"], duration: "w", midiValue: 55 },
+             { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["d/3"], duration: "w", midiValue: 50 }
+        ] },
 
+    // --- Jazz Blues Variations (12 Bars) ---
+    { id: "blues-jazz-F7", name: "Jazz Blues (F - Basic)", category: "giri_armonici", staveLayout: "grand", keySignature: "Bb", timeSignature: "4/4", repetitions: 2, notesTreble: [ // F7 | Bb7 | F7 | Cm7 F7 | Bb7 | Bdim7 | F7 | Am7 D7 | Gm7 | C7 | F7 D7 | Gm7 C7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["bb/3", "d/4", "f/4", "ab/4"], duration: "w", midiValues: [58, 62, 65, 68] }, // Bb7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["c/4", "eb/4", "g/4", "bb/4"], duration: "h", midiValues: [60, 63, 67, 70] }, { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "h", midiValues: [65, 69, 72, 75] }, // Cm7 F7
+            { keys: ["bb/3", "d/4", "f/4", "ab/4"], duration: "w", midiValues: [58, 62, 65, 68] }, // Bb7
+            { keys: ["b/3", "d/4", "f/4", "ab/4"], duration: "w", midiValues: [59, 62, 65, 68] }, // Bdim7 (simplified)
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["a/3", "c/4", "e/4", "g/4"], duration: "h", midiValues: [57, 60, 64, 67] }, { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "h", midiValues: [62, 66, 69, 72] }, // Am7 D7
+            { keys: ["g/3", "bb/3", "d/4", "f/4"], duration: "w", midiValues: [55, 58, 62, 65] }, // Gm7
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, // C7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "h", midiValues: [65, 69, 72, 75] }, { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "h", midiValues: [62, 66, 69, 72] }, // F7 D7
+            { keys: ["g/3", "bb/3", "d/4", "f/4"], duration: "h", midiValues: [55, 58, 62, 65] }, { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "h", midiValues: [60, 64, 67, 70] }  // Gm7 C7
+        ], notesBass: [
+            { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["c/3"], duration: "h", midiValue: 48 }, { keys: ["f/2"], duration: "h", midiValue: 41 },
+            { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["b/2"], duration: "w", midiValue: 47 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["a/2"], duration: "h", midiValue: 45 }, { keys: ["d/3"], duration: "h", midiValue: 50 },
+            { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "h", midiValue: 41 }, { keys: ["d/3"], duration: "h", midiValue: 50 },
+            { keys: ["g/2"], duration: "h", midiValue: 43 }, { keys: ["c/3"], duration: "h", midiValue: 48 }
+        ] },
+    { id: "blues-jazz-C7", name: "Jazz Blues (C - Basic)", category: "giri_armonici", staveLayout: "grand", keySignature: "F", timeSignature: "4/4", repetitions: 2, notesTreble: [ // C7 | F7 | C7 | Gm7 C7 | F7 | F#dim7 | C7 | Em7 A7 | Dm7 | G7 | C7 A7 | Dm7 G7
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, // C7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, // C7
+            { keys: ["g/3", "bb/3", "d/4", "f/4"], duration: "h", midiValues: [55, 58, 62, 65] }, { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "h", midiValues: [60, 64, 67, 70] }, // Gm7 C7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["f#/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [66, 69, 72, 75] }, // F#dim7 (simplified)
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, // C7
+            { keys: ["e/4", "g/4", "b/4", "d/5"], duration: "h", midiValues: [64, 67, 71, 74] }, { keys: ["a/3", "c#/4", "e/4", "g/4"], duration: "h", midiValues: [57, 61, 64, 67] }, // Em7 A7
+            { keys: ["d/4", "f/4", "a/4", "c/5"], duration: "w", midiValues: [62, 65, 69, 72] }, // Dm7
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "h", midiValues: [60, 64, 67, 70] }, { keys: ["a/3", "c#/4", "e/4", "g/4"], duration: "h", midiValues: [57, 61, 64, 67] }, // C7 A7
+            { keys: ["d/4", "f/4", "a/4", "c/5"], duration: "h", midiValues: [62, 65, 69, 72] }, { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "h", midiValues: [67, 71, 74, 77] }  // Dm7 G7
+        ], notesBass: [
+            { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["g/2"], duration: "h", midiValue: 43 }, { keys: ["c/3"], duration: "h", midiValue: 48 },
+            { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["f#/2"], duration: "w", midiValue: 42 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["e/3"], duration: "h", midiValue: 52 }, { keys: ["a/2"], duration: "h", midiValue: 45 },
+            { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["c/3"], duration: "h", midiValue: 48 }, { keys: ["a/2"], duration: "h", midiValue: 45 },
+            { keys: ["d/3"], duration: "h", midiValue: 50 }, { keys: ["g/2"], duration: "h", midiValue: 43 }
+        ] },
+     { id: "blues-jazz-G7", name: "Jazz Blues (G - Basic)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 2, notesTreble: [ // G7 | C7 | G7 | Am7 D7 | C7 | C#dim7 | G7 | Bm7 E7 | Am7 | D7 | G7 E7 | Am7 D7
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, // C7
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7
+            { keys: ["a/4", "c/5", "e/5", "g/5"], duration: "h", midiValues: [69, 72, 76, 79] }, { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "h", midiValues: [62, 66, 69, 72] }, // Am7 D7
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, // C7
+            { keys: ["c#/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [61, 64, 67, 70] }, // C#dim7 (simplified)
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7
+            { keys: ["b/3", "d/4", "f#/4", "a/4"], duration: "h", midiValues: [59, 62, 66, 69] }, { keys: ["e/4", "g#/4", "b/4", "d/5"], duration: "h", midiValues: [64, 68, 71, 74] }, // Bm7 E7
+            { keys: ["a/4", "c/5", "e/5", "g/5"], duration: "w", midiValues: [69, 72, 76, 79] }, // Am7
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "h", midiValues: [67, 71, 74, 77] }, { keys: ["e/4", "g#/4", "b/4", "d/5"], duration: "h", midiValues: [64, 68, 71, 74] }, // G7 E7
+            { keys: ["a/4", "c/5", "e/5", "g/5"], duration: "h", midiValues: [69, 72, 76, 79] }, { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "h", midiValues: [62, 66, 69, 72] }  // Am7 D7
+        ], notesBass: [
+             { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["a/2"], duration: "h", midiValue: 45 }, { keys: ["d/3"], duration: "h", midiValue: 50 },
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["c#/3"], duration: "w", midiValue: 49 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["b/2"], duration: "h", midiValue: 47 }, { keys: ["e/3"], duration: "h", midiValue: 52 },
+             { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/3"], duration: "h", midiValue: 55 }, { keys: ["e/3"], duration: "h", midiValue: 52 },
+             { keys: ["a/2"], duration: "h", midiValue: 45 }, { keys: ["d/3"], duration: "h", midiValue: 50 }
+        ] },
+
+
+    // --- Circle of Fifths Progressions (12 Bars) ---
+    { id: "circle-fifths-maj7-C", name: "Circle of Fifths (Maj7 - start C)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 1, notesTreble: [ // C | F | Bb | Eb | Ab | Db | Gb | B | E | A | D | G
+            { keys: ["c/4", "e/4", "g/4", "b/4"], duration: "w", midiValues: [60, 64, 67, 71] }, // CMaj7
+            { keys: ["f/4", "a/4", "c/5", "e/5"], duration: "w", midiValues: [65, 69, 72, 76] }, // FMaj7
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }, // BbMaj7
+            { keys: ["eb/4", "g/4", "bb/4", "d/5"], duration: "w", midiValues: [63, 67, 70, 74] }, // EbMaj7
+            { keys: ["ab/3", "c/4", "eb/4", "g/4"], duration: "w", midiValues: [56, 60, 63, 67] }, // AbMaj7
+            { keys: ["db/4", "f/4", "ab/4", "c/5"], duration: "w", midiValues: [61, 65, 68, 72] }, // DbMaj7
+            { keys: ["gb/3", "bb/3", "db/4", "f/4"], duration: "w", midiValues: [54, 58, 61, 65] }, // GbMaj7
+            { keys: ["b/3", "d#/4", "f#/4", "a#/4"], duration: "w", midiValues: [59, 63, 66, 70] }, // BMaj7
+            { keys: ["e/4", "g#/4", "b/4", "d#/5"], duration: "w", midiValues: [64, 68, 71, 75] }, // EMaj7
+            { keys: ["a/3", "c#/4", "e/4", "g#/4"], duration: "w", midiValues: [57, 61, 64, 68] }, // AMaj7
+            { keys: ["d/4", "f#/4", "a/4", "c#/5"], duration: "w", midiValues: [62, 66, 69, 73] }, // DMaj7
+            { keys: ["g/4", "b/4", "d/5", "f#/5"], duration: "w", midiValues: [67, 71, 74, 78] }  // GMaj7
+        ], notesBass: [
+            { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["bb/2"], duration: "w", midiValue: 46 },
+            { keys: ["eb/3"], duration: "w", midiValue: 51 }, { keys: ["ab/2"], duration: "w", midiValue: 44 }, { keys: ["db/3"], duration: "w", midiValue: 49 },
+            { keys: ["gb/2"], duration: "w", midiValue: 42 }, { keys: ["b/2"], duration: "w", midiValue: 47 }, { keys: ["e/3"], duration: "w", midiValue: 52 },
+            { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/2"], duration: "w", midiValue: 43 }
+        ] },
+    { id: "circle-fifths-dom7-C", name: "Circle of Fifths (Dom7 - start C7)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 1, notesTreble: [ // C7 | F7 | Bb7 | Eb7 | Ab7 | Db7 | Gb7 | B7 | E7 | A7 | D7 | G7
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, // C7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["bb/3", "d/4", "f/4", "ab/4"], duration: "w", midiValues: [58, 62, 65, 68] }, // Bb7
+            { keys: ["eb/4", "g/4", "bb/4", "db/5"], duration: "w", midiValues: [63, 67, 70, 73] }, // Eb7
+            { keys: ["ab/3", "c/4", "eb/4", "gb/4"], duration: "w", midiValues: [56, 60, 63, 66] }, // Ab7
+            { keys: ["db/4", "f/4", "ab/4", "cb/5"], duration: "w", midiValues: [61, 65, 68, 71] }, // Db7
+            { keys: ["gb/3", "bb/3", "db/4", "e/4"], duration: "w", midiValues: [54, 58, 61, 64] }, // Gb7 (enharmonic F#7)
+            { keys: ["b/3", "d#/4", "f#/4", "a/4"], duration: "w", midiValues: [59, 63, 66, 69] }, // B7
+            { keys: ["e/4", "g#/4", "b/4", "d/5"], duration: "w", midiValues: [64, 68, 71, 74] }, // E7
+            { keys: ["a/3", "c#/4", "e/4", "g/4"], duration: "w", midiValues: [57, 61, 64, 67] }, // A7
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }  // G7
+        ], notesBass: [
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["bb/2"], duration: "w", midiValue: 46 },
+             { keys: ["eb/3"], duration: "w", midiValue: 51 }, { keys: ["ab/2"], duration: "w", midiValue: 44 }, { keys: ["db/3"], duration: "w", midiValue: 49 },
+             { keys: ["gb/2"], duration: "w", midiValue: 42 }, { keys: ["b/2"], duration: "w", midiValue: 47 }, { keys: ["e/3"], duration: "w", midiValue: 52 },
+             { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/2"], duration: "w", midiValue: 43 }
+        ] },
+     { id: "circle-fifths-ii-V-I-C", name: "Circle of Fifths (ii-V-I chunks in C)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 2, notesTreble: [ // Dm7 | G7 | CMaj7 | CMaj7 | Gm7 | C7 | FMaj7 | FMaj7 | Cm7 | F7 | BbMaj7 | BbMaj7
+            { keys: ["d/4", "f/4", "a/4", "c/5"], duration: "w", midiValues: [62, 65, 69, 72] }, // Dm7
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7
+            { keys: ["c/4", "e/4", "g/4", "b/4"], duration: "w", midiValues: [60, 64, 67, 71] }, // CMaj7
+            { keys: ["c/4", "e/4", "g/4", "b/4"], duration: "w", midiValues: [60, 64, 67, 71] }, // CMaj7
+            { keys: ["g/3", "bb/3", "d/4", "f/4"], duration: "w", midiValues: [55, 58, 62, 65] }, // Gm7
+            { keys: ["c/4", "e/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 64, 67, 70] }, // C7
+            { keys: ["f/4", "a/4", "c/5", "e/5"], duration: "w", midiValues: [65, 69, 72, 76] }, // FMaj7
+            { keys: ["f/4", "a/4", "c/5", "e/5"], duration: "w", midiValues: [65, 69, 72, 76] }, // FMaj7
+            { keys: ["c/4", "eb/4", "g/4", "bb/4"], duration: "w", midiValues: [60, 63, 67, 70] }, // Cm7
+            { keys: ["f/4", "a/4", "c/5", "eb/5"], duration: "w", midiValues: [65, 69, 72, 75] }, // F7
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }, // BbMaj7
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }  // BbMaj7
+        ], notesBass: [
+             { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["c/3"], duration: "w", midiValue: 48 },
+             { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["f/2"], duration: "w", midiValue: 41 },
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }
+        ] },
+
+    // --- Progressions with Secondary Dominants (12 bars) ---
+     { id: "secondary-dom-Cmaj-V7-vi", name: "Secondary Dom V7/vi (C Maj)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 3, notesTreble: [ // C | C | E7 | Am | F | C/G | G7 | C | C | E7 | Am | G7
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["e/4", "g#/4", "b/4", "d/5"], duration: "w", midiValues: [64, 68, 71, 74] }, // E7 (V7/vi)
+            { keys: ["a/4", "c/5", "e/5"], duration: "w", midiValues: [69, 72, 76] }, // Am (vi)
+            { keys: ["f/4", "a/4", "c/5"], duration: "w", midiValues: [65, 69, 72] }, // F
+            { keys: ["g/4", "c/5", "e/5"], duration: "w", midiValues: [67, 72, 76] }, // C/G (I inversion)
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["e/4", "g#/4", "b/4", "d/5"], duration: "w", midiValues: [64, 68, 71, 74] }, // E7 (V7/vi)
+            { keys: ["a/4", "c/5", "e/5"], duration: "w", midiValues: [69, 72, 76] }, // Am (vi)
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }  // G7
+        ], notesBass: [
+            { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["e/3"], duration: "w", midiValue: 52 }, { keys: ["a/2"], duration: "w", midiValue: 45 },
+            { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["c/3"], duration: "w", midiValue: 48 },
+            { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["e/3"], duration: "w", midiValue: 52 }, { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["g/2"], duration: "w", midiValue: 43 }
+        ] },
+    { id: "secondary-dom-Cmaj-V7-V", name: "Secondary Dom V7/V (C Maj)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 3, notesTreble: [ // C | F | D7 | G7 | C | F | D7 | G7 | C | G7 | C | C
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["f/4", "a/4", "c/5"], duration: "w", midiValues: [65, 69, 72] }, // F
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7 (V7/V)
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7 (V)
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["f/4", "a/4", "c/5"], duration: "w", midiValues: [65, 69, 72] }, // F
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7 (V7/V)
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7 (V)
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }  // C
+        ], notesBass: [
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/2"], duration: "w", midiValue: 43 },
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["g/2"], duration: "w", midiValue: 43 },
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["c/3"], duration: "w", midiValue: 48 }
+        ] },
+     { id: "secondary-dom-Gmaj-V7-IV", name: "Secondary Dom V7/IV (G Maj)", category: "giri_armonici", staveLayout: "grand", keySignature: "G", timeSignature: "4/4", repetitions: 3, notesTreble: [ // G | C | G | C | G7 | C | G/D | D7 | G | G | G7 | C -> G
+            { keys: ["g/4", "b/4", "d/5"], duration: "w", midiValues: [67, 71, 74] }, // G
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["g/4", "b/4", "d/5"], duration: "w", midiValues: [67, 71, 74] }, // G
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7 (V7/IV in G is V7/C)
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C (IV)
+            { keys: ["d/4", "g/4", "b/4"], duration: "w", midiValues: [62, 67, 71] }, // G/D
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7 (V)
+            { keys: ["g/4", "b/4", "d/5"], duration: "w", midiValues: [67, 71, 74] }, // G
+            { keys: ["g/4", "b/4", "d/5"], duration: "w", midiValues: [67, 71, 74] }, // G
+            { keys: ["g/4", "b/4", "d/5", "f/5"], duration: "w", midiValues: [67, 71, 74, 77] }, // G7
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }  // C (resolves back to G implied)
+        ], notesBass: [
+            { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["c/3"], duration: "w", midiValue: 48 },
+            { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["d/3"], duration: "w", midiValue: 50 },
+            { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["g/3"], duration: "w", midiValue: 55 }, { keys: ["c/3"], duration: "w", midiValue: 48 }
+        ] },
+
+    // --- More Pop/Rock Progressions (12 Bars) ---
+    { id: "pop-canon-desc-Cmaj", name: "Pop Canon Descending Bass (C)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 3, notesTreble: [ // C | G/B | Am | Em/G | F | C/E | Dm | G | C | G/B | Am | G
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["b/3", "d/4", "g/4"], duration: "w", midiValues: [59, 62, 67] }, // G/B
+            { keys: ["a/3", "c/4", "e/4"], duration: "w", midiValues: [57, 60, 64] }, // Am
+            { keys: ["g/3", "b/3", "e/4"], duration: "w", midiValues: [55, 59, 64] }, // Em/G
+            { keys: ["f/3", "a/3", "c/4"], duration: "w", midiValues: [53, 57, 60] }, // F
+            { keys: ["e/3", "g/3", "c/4"], duration: "w", midiValues: [52, 55, 60] }, // C/E
+            { keys: ["d/3", "f/3", "a/3"], duration: "w", midiValues: [50, 53, 57] }, // Dm
+            { keys: ["g/3", "b/3", "d/4"], duration: "w", midiValues: [55, 59, 62] }, // G
+            { keys: ["c/4", "e/4", "g/4"], duration: "w", midiValues: [60, 64, 67] }, // C
+            { keys: ["b/3", "d/4", "g/4"], duration: "w", midiValues: [59, 62, 67] }, // G/B
+            { keys: ["a/3", "c/4", "e/4"], duration: "w", midiValues: [57, 60, 64] }, // Am
+            { keys: ["g/3", "b/3", "d/4"], duration: "w", midiValues: [55, 59, 62] }  // G
+        ], notesBass: [
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["b/2"], duration: "w", midiValue: 47 }, { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["g/2"], duration: "w", midiValue: 43 },
+             { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["e/2"], duration: "w", midiValue: 40 }, { keys: ["d/2"], duration: "w", midiValue: 38 }, { keys: ["g/2"], duration: "w", midiValue: 43 },
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["b/2"], duration: "w", midiValue: 47 }, { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["g/2"], duration: "w", midiValue: 43 }
+        ] },
+    { id: "pop-doo-wop-Cmaj", name: "Doo-Wop I-vi-IV-V (C - Rhythm)", category: "giri_armonici", staveLayout: "grand", keySignature: "C", timeSignature: "4/4", repetitions: 4, notesTreble: [ // C | C | Am | Am | F | F | G | G | C | Am | F G | C C
+            { keys: ["c/4", "e/4", "g/4"], duration: "q" }, { keys: ["c/4", "e/4", "g/4"], duration: "q" }, { keys: ["r/4"], duration: "h" }, // Quarter, Quarter, Half Rest
+            { keys: ["c/4", "e/4", "g/4"], duration: "q" }, { keys: ["c/4", "e/4", "g/4"], duration: "q" }, { keys: ["r/4"], duration: "h" },
+            { keys: ["a/3", "c/4", "e/4"], duration: "q" }, { keys: ["a/3", "c/4", "e/4"], duration: "q" }, { keys: ["r/4"], duration: "h" },
+            { keys: ["a/3", "c/4", "e/4"], duration: "q" }, { keys: ["a/3", "c/4", "e/4"], duration: "q" }, { keys: ["r/4"], duration: "h" },
+            { keys: ["f/3", "a/3", "c/4"], duration: "q" }, { keys: ["f/3", "a/3", "c/4"], duration: "q" }, { keys: ["r/4"], duration: "h" },
+            { keys: ["f/3", "a/3", "c/4"], duration: "q" }, { keys: ["f/3", "a/3", "c/4"], duration: "q" }, { keys: ["r/4"], duration: "h" },
+            { keys: ["g/3", "b/3", "d/4"], duration: "q" }, { keys: ["g/3", "b/3", "d/4"], duration: "q" }, { keys: ["r/4"], duration: "h" },
+            { keys: ["g/3", "b/3", "d/4"], duration: "q" }, { keys: ["g/3", "b/3", "d/4"], duration: "q" }, { keys: ["r/4"], duration: "h" },
+            { keys: ["c/4", "e/4", "g/4"], duration: "w" }, // Last 4 bars simpler
+            { keys: ["a/3", "c/4", "e/4"], duration: "w" },
+            { keys: ["f/3", "a/3", "c/4"], duration: "h" }, { keys: ["g/3", "b/3", "d/4"], duration: "h" },
+            { keys: ["c/4", "e/4", "g/4"], duration: "w" }
+        ], notesBass: [ // Roots on beat 1
+             { keys: ["c/3"], duration: "w" }, { keys: ["c/3"], duration: "w" }, { keys: ["a/2"], duration: "w" }, { keys: ["a/2"], duration: "w" },
+             { keys: ["f/2"], duration: "w" }, { keys: ["f/2"], duration: "w" }, { keys: ["g/2"], duration: "w" }, { keys: ["g/2"], duration: "w" },
+             { keys: ["c/3"], duration: "w" }, { keys: ["a/2"], duration: "w" }, { keys: ["f/2"], duration: "h" }, { keys: ["g/2"], duration: "h" },
+             { keys: ["c/3"], duration: "w" }
+         ], midiValuesTreble: [ // Corresponding MIDI values for the above rhythmic pattern
+            [60, 64, 67], [60, 64, 67], null, [60, 64, 67], [60, 64, 67], null,
+            [57, 60, 64], [57, 60, 64], null, [57, 60, 64], [57, 60, 64], null,
+            [53, 57, 60], [53, 57, 60], null, [53, 57, 60], [53, 57, 60], null,
+            [55, 59, 62], [55, 59, 62], null, [55, 59, 62], [55, 59, 62], null,
+            [60, 64, 67], [57, 60, 64], [53, 57, 60], [55, 59, 62], [60, 64, 67]
+         ], midiValuesBass: [ // Corresponding MIDI values for roots
+            [48], [48], [45], [45], [41], [41], [43], [43], [48], [45], [41], [43], [48]
+         ]}, // Note: This complex rhythm needs careful implementation/testing in the renderer
+
+
+    // --- Modal Progressions (12 bars) ---
+    { id: "modal-dorian-Am", name: "Modal Vamp Dorian (Am - 12 Bars)", category: "giri_armonici", staveLayout: "grand", keySignature: "Am", timeSignature: "4/4", repetitions: 3, notesTreble: [ // Am7 | D7 | Am7 | D7 | Am7 | D7 | Am7 | D7 | Gmaj7 | Cmaj7 | Am7 | D7
+            { keys: ["a/3", "c/4", "e/4", "g/4"], duration: "w", midiValues: [57, 60, 64, 67] }, // Am7
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7 (Dorian V)
+            { keys: ["a/3", "c/4", "e/4", "g/4"], duration: "w", midiValues: [57, 60, 64, 67] }, // Am7
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7
+            { keys: ["a/3", "c/4", "e/4", "g/4"], duration: "w", midiValues: [57, 60, 64, 67] }, // Am7
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7
+            { keys: ["a/3", "c/4", "e/4", "g/4"], duration: "w", midiValues: [57, 60, 64, 67] }, // Am7
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }, // D7
+            { keys: ["g/4", "b/4", "d/5", "f#/5"], duration: "w", midiValues: [67, 71, 74, 78] }, // GMaj7 (Rel Maj)
+            { keys: ["c/4", "e/4", "g/4", "b/4"], duration: "w", midiValues: [60, 64, 67, 71] }, // CMaj7 (Rel IV)
+            { keys: ["a/3", "c/4", "e/4", "g/4"], duration: "w", midiValues: [57, 60, 64, 67] }, // Am7
+            { keys: ["d/4", "f#/4", "a/4", "c/5"], duration: "w", midiValues: [62, 66, 69, 72] }  // D7
+        ], notesBass: [
+             { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 },
+             { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }, { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 },
+             { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["a/2"], duration: "w", midiValue: 45 }, { keys: ["d/3"], duration: "w", midiValue: 50 }
+        ] },
+    { id: "modal-lydian-Fmaj", name: "Modal Vamp Lydian (Fmaj - 12 Bars)", category: "giri_armonici", staveLayout: "grand", keySignature: "F", timeSignature: "4/4", repetitions: 3, notesTreble: [ // Fmaj7#11 | G7sus4 | Fmaj7#11 | G7sus4 | Fmaj7#11 | G7sus4 | Fmaj7#11 | G7sus4 | Cmaj7 | Bbmaj7 | Fmaj7#11 | G7sus4
+            { keys: ["f/3", "a/3", "c/4", "e/4", "b/4"], duration: "w", midiValues: [53, 57, 60, 64, 71] }, // Fmaj7(#11) - B natural is #11
+            { keys: ["g/3", "c/4", "d/4", "f/4"], duration: "w", midiValues: [55, 60, 62, 65] }, // G7sus4
+            { keys: ["f/3", "a/3", "c/4", "e/4", "b/4"], duration: "w", midiValues: [53, 57, 60, 64, 71] }, // Fmaj7(#11)
+            { keys: ["g/3", "c/4", "d/4", "f/4"], duration: "w", midiValues: [55, 60, 62, 65] }, // G7sus4
+            { keys: ["f/3", "a/3", "c/4", "e/4", "b/4"], duration: "w", midiValues: [53, 57, 60, 64, 71] }, // Fmaj7(#11)
+            { keys: ["g/3", "c/4", "d/4", "f/4"], duration: "w", midiValues: [55, 60, 62, 65] }, // G7sus4
+            { keys: ["f/3", "a/3", "c/4", "e/4", "b/4"], duration: "w", midiValues: [53, 57, 60, 64, 71] }, // Fmaj7(#11)
+            { keys: ["g/3", "c/4", "d/4", "f/4"], duration: "w", midiValues: [55, 60, 62, 65] }, // G7sus4
+            { keys: ["c/4", "e/4", "g/4", "b/4"], duration: "w", midiValues: [60, 64, 67, 71] }, // Cmaj7 (V)
+            { keys: ["bb/3", "d/4", "f/4", "a/4"], duration: "w", midiValues: [58, 62, 65, 69] }, // Bbmaj7 (IV)
+            { keys: ["f/3", "a/3", "c/4", "e/4", "b/4"], duration: "w", midiValues: [53, 57, 60, 64, 71] }, // Fmaj7(#11)
+            { keys: ["g/3", "c/4", "d/4", "f/4"], duration: "w", midiValues: [55, 60, 62, 65] }  // G7sus4
+        ], notesBass: [
+             { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["g/2"], duration: "w", midiValue: 43 },
+             { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["g/2"], duration: "w", midiValue: 43 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["g/2"], duration: "w", midiValue: 43 },
+             { keys: ["c/3"], duration: "w", midiValue: 48 }, { keys: ["bb/2"], duration: "w", midiValue: 46 }, { keys: ["f/2"], duration: "w", midiValue: 41 }, { keys: ["g/2"], duration: "w", midiValue: 43 }
+        ] },
 ]; // Fine array giriArmoniciExercises
 
 window.exerciseData = window.exerciseData || {};
